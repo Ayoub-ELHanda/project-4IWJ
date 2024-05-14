@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Custom styles for Todo page */
+        .todo-list {
+            margin: 20px auto;
+            max-width: 600px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .todo-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+
+        .todo-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .todo-status {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .todo-done {
+            color: green;
+            font-weight: bold;
+        }
+
+        .todo-not-done {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Todo List</h1>
+    <div class="todo-list">
+        {% for todo in todos %}
+            <div class="todo-item">
+                <span class="todo-title">{{ todo.title }}</span>
+                <span class="todo-status {% if todo.done %}todo-done{% else %}todo-not-done{% endif %}">
+                    {% if todo.done %}Done{% else %}Not Done{% endif %}
+                </span>
+            </div>
+        {% else %}
+            <p>No todos found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
