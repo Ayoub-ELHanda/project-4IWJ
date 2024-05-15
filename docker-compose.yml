@@ -1,17 +1,6 @@
 version: '3.8'
 
 services:
-  postgres:
-    build:
-      context: docker/postgres
-    environment:
-      POSTGRES_DB: db
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test123
-    ports:
-      - "5432:5432"
-    container_name: data_base
-
   php:
     build:
       context: .
@@ -21,8 +10,9 @@ services:
       - '9000:9000'
     volumes:
       - ./app:/var/www/symfony_docker
-    depends_on:
-      - postgres
+    networks:
+      - front
+      - back
 
   nginx:
     container_name: nginx
@@ -34,9 +24,11 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
-      - postgres
+    networks:
+      - front
 
-  adminer:
-    image: adminer:latest
-    ports:
-      - "8081:8080"
+networks:
+  back:
+    name: back
+  front:
+    name: front
