@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GarageController!{% endblock %}
+
+{% block body %}
+{# templates/garage/new.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Créer un nouveau garage</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">Enregistrer</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% endblock %}
