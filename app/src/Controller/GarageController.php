@@ -12,9 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GarageController extends AbstractController
 {
-    /**
-     * @Route("/garages", name="garages_list")
-     */
+    #[Route('/garages', name: 'garages_list')]
+
     public function list(GarageRepository $garageRepository): Response
     {
         $garages = $garageRepository->findAll();
@@ -24,9 +23,8 @@ class GarageController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/garage/new", name="garage_new")
-     */
+    #[Route('/garage/new', name: 'garage_new')]
+
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $garage = new Garage();
