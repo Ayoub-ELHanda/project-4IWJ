@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<section class="flex overflow-hidden relative flex-col items-center px-16 pt-14 pb-9 min-h-[1345px] max-md:px-5">
+    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/2dcf5d9489e98e396168fe824351811316e64c09fb527db12388dce9c09ba3a5?apiKey=8247e33786d041d6ac5b339a992b1663&" alt="" class="object-cover absolute inset-0 size-full" />
+    <div class="flex relative flex-col items-center w-full max-w-[1206px] max-md:max-w-full">
+        <h1 class="text-4xl font-semibold text-white">GarageGenius</h1>
+        <div class="mt-16 w-full max-w-[1130px] max-md:mt-10 max-md:max-w-full">
+            <div class="flex gap-5 max-md:flex-col max-md:gap-0">
+                <div class="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+                    <form method="post" action="{{ path('app_register') }}" class="flex flex-col grow px-11 py-8 w-full text-xl font-semibold text-black bg-white rounded-3xl max-md:px-5 max-md:mt-8 max-md:max-w-full">
+                        <h2 class="self-center text-2xl text-center">Je n'ai pas encore de compte GarageGenius</h2>
+                        <label for="new-username" class="mt-5 max-md:max-w-full">Nom d’utilisateur (nom du garage) :</label>
+                        <input type="text" name="username" id="new-username" class="justify-center py-3.5 mt-3 text-sm italic font-thin bg-stone-300 bg-opacity-30 max-md:max-w-full" aria-label="Nom d’utilisateur" required>
+                        <label for="address" class="mt-5 max-md:max-w-full">Adresse postale :</label>
+                        <input type="text" name="address" id="address" class="justify-center py-3 mt-3 text-sm italic font-thin bg-stone-300 bg-opacity-30 max-md:max-w-full" aria-label="Adresse du garage" required>
+                        <label for="phone" class="mt-5 max-md:max-w-full">Numéro de téléphone :</label>
+                        <input type="tel" name="phone" id="phone" class="justify-center py-3 mt-3 text-sm italic font-thin bg-stone-300 bg-opacity-30 max-md:max-w-full" aria-label="Numéro de téléphone" required>
+                        <label for="email" class="mt-5 max-md:max-w-full">Email :</label>
+                        <input type="email" name="email" id="email" class="justify-center py-3.5 mt-4 text-sm italic font-thin bg-stone-300 bg-opacity-30 max-md:max-w-full" aria-label="Adresse mail" required>
+                        <label for="new-password" class="mt-5 max-md:max-w-full">Mot de passe :</label>
+                        <input type="password" name="password" id="new-password" class="justify-center py-3 mt-3 text-sm italic font-thin bg-stone-300 bg-opacity-30 max-md:max-w-full" aria-label="Mot de passe" required>
+                        <div class="flex gap-3 mt-8 text-xs max-md:flex-wrap">
+                            <input type="checkbox" name="terms" class="shrink-0 border border-black border-solid h-[13px] w-[13px]" id="terms" required>
+                            <label for="terms" class="flex-auto max-md:max-w-full">J’accepte les Conditions générales de service GarageGenius</label>
+                        </div>
+                        <div class="flex gap-3 mt-5 text-xs max-md:flex-wrap">
+                            <input type="checkbox" name="newsletters" class="shrink-0 self-start border border-black border-solid h-[13px] w-[13px]" id="newsletters">
+                            <label for="newsletters" class="flex-auto max-md:max-w-full">J'accepte de recevoir des e-mails relatifs aux nouveautés et offres commerciales de GarageGenius.</label>
+                        </div>
+                        <button type="submit" class="justify-center self-center px-5 py-5 mt-10 text-white rounded-2xl bg-slate-900">Créer un compte</button>
+                    </form>
+                </div>
+                <div class="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+                    <form method="post" action="{{ path('app_login') }}" class="flex flex-col px-12 py-7 w-full text-xl font-semibold text-black bg-white rounded-3xl max-md:px-5 max-md:mt-8 max-md:max-w-full">
+                        {% if app.user %}
+                            <div class="mb-3">
+                                Vous êtes connecté(e) comme {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Me déconnecter</a>
+                            </div>
+                        {% endif %}
+                        <h2 class="mx-8 text-2xl max-md:mx-2.5">Je suis déjà client GarageGenius</h2>
+                        <label for="inputEmail" class="mt-20 max-md:mt-10 max-md:max-w-full">Nom d’utilisateur ou email :</label>
+                        <input type="text" name="email" id="inputEmail" value="{{ last_username }}" class="justify-center py-3.5 mt-4 text-sm italic font-thin bg-stone-300 bg-opacity-30 max-md:max-w-full" autocomplete="email" required autofocus>
+                        <label for="inputPassword" class="mt-11 max-md:mt-10 max-md:max-w-full">Mot de passe :</label>
+                        <input type="password" name="password" id="inputPassword" class="justify-center py-3 mt-3 text-sm italic font-thin bg-stone-300 bg-opacity-30 max-md:max-w-full" autocomplete="current-password" required>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <button type="submit" class="justify-center self-center px-10 py-6 mt-14 text-white rounded-2xl bg-slate-900 max-md:px-5 max-md:mt-10">Se connecter</button>
+                        <a href="{{ path('forgotten_password') }}" class="self-center mt-3.5 text-sm italic">Mot de passe oublié</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <p class="self-stretch mt-24 text-xl text-black underline max-md:mt-10 max-md:max-w-full">
+            Les informations fournies à travers ce formulaire sont collectées avec votre consentement et sont destinées à GarageGenius en sa qualité de responsable du traitement. Elles pourront être transmises à ses sous-traitants agissant sur instructions de GarageGenius ainsi qu’à ses partenaires commerciaux. Dans ce dernier cas, et sous réserve que le partenaire commercial ait signé des accords de confidentialité appropriés, les données pourront être transférées à l'extérieur de votre région. Les données de ce formulaire sont collectées dans le but de gérer la relation client, d'assurer un suivi commercial et de se conformer à la réglementation en vigueur. Les données de votre compte client sont conservées pendant toute la durée de votre relation avec GarageGenius et jusqu'à trente-six (36) mois après sa clôture. Certaines données, telles que les informations de facturation, peuvent être conservées plus longtemps conform
+        </p>
+    </div>
+</section>
+{% endblock %}

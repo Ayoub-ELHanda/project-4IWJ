@@ -1,0 +1,8 @@
+DROP TABLE devis;
+DROP TABLE doctrine_migration_versions;
+DROP TABLE garage;
+DROP TABLE user;
+DROP TABLE table;
+DROP SEQUENCE todo_id_seq;
+DROP SEQUENCE todo;
+DROP SEQUENCE user;

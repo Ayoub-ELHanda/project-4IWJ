@@ -9,12 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'home')]
+    #[Route('/', name: 'homepage')]
     public function index(): Response
     {
-        // Vous pouvez ajouter le code nécessaire ici pour générer la réponse de votre page d'accueil.
-        // Par exemple, le rendu d'un template Twig.
-        
-        return $this->render('home/index.html.twig');
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
     }
 }
