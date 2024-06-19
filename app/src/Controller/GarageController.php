@@ -23,23 +23,5 @@ class GarageController extends AbstractController
         ]);
     }
 
-    #[Route('/garage/new', name: 'garage_new')]
-
-    public function new(Request $request, EntityManagerInterface $em): Response
-    {
-        $garage = new Garage();
-        $form = $this->createForm(GarageType::class, $garage);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($garage);
-            $em->flush();
-
-            return $this->redirectToRoute('garages_list');
-        }
-
-        return $this->render('garage/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
+   
 }
