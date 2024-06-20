@@ -11,11 +11,16 @@ services:
     ports:
       - "5432:5432"
     container_name: data_base
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U symfony"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   php:
     build:
       context: .
-      dockerfile: docker/Symfony/Dockerfile
+      dockerfile: docker/symfony/Dockerfile
     container_name: php
     ports:
       - '9000:9000'
