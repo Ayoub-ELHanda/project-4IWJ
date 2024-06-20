@@ -26,7 +26,6 @@
                         <input type="password" name="password" id="inputPassword" class="justify-center py-3 mt-3 text-sm italic font-thin bg-stone-300 bg-opacity-30 max-md:max-w-full" autocomplete="current-password" required>
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         <button type="submit" class="justify-center self-center px-10 py-6 mt-14 text-white rounded-2xl bg-slate-900 max-md:px-5 max-md:mt-10">Se connecter</button>
-                        <a href="{{ path('forgotten_password') }}" class="self-center mt-3.5 text-sm italic">Mot de passe oublié</a>
                     </form>
                 </div>
                 <div class="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
