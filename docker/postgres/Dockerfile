@@ -1,8 +1,7 @@
-
 FROM postgres:13.3-alpine
 
-
-ENV POSTGRES_DB symfony
-
+ENV POSTGRES_DB=symfony
+ENV POSTGRES_USER=symfony
+ENV POSTGRES_PASSWORD=secret
 
 EXPOSE 5432
