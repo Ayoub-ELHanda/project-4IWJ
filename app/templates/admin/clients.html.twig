@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Clients{% endblock %}
+
+{% block body %}
+<div class="pr-12 bg-neutral-100 max-md:pr-5">
+  <div class="flex gap-5 max-md:flex-col max-md:gap-0">
+    <aside class="flex flex-col w-[22%] max-md:ml-0 max-md:w-full">
+      <nav class="flex flex-col grow items-start py-9 pl-3.5 mx-auto w-full text-2xl text-white whitespace-nowrap bg-slate-900 max-md:mt-10">
+        <h1 class="self-center text-3xl font-semibold">GarageGenius</h1>
+        <h2 class="mt-16 ml-6 max-md:mt-10 max-md:ml-2.5">Menu</h2>
+        <a href="#" class="flex gap-3 mt-12 ml-6 max-md:mt-10 max-md:ml-2.5">
+          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/57f013a2c5eaa77571cc28ba7c078b525f61f367812b16eb8b9858c002cfb48c?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 aspect-square w-[35px]" alt="" />
+          <span class="flex-auto my-auto">Dashboard</span>
+        </a>
+        <a href="#" class="flex gap-3.5 mt-8 ml-5 max-md:ml-2.5">
+          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/5e49684d95e73025fcde2ddc65722d2b19bdf9f131eb96cd43fac4d01c0f0f0c?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 aspect-square w-[35px]" alt="" />
+          <span class="my-auto">Devis</span>
+        </a>
+        <a href="#" class="flex gap-3.5 mt-9 ml-5 max-md:ml-2.5">
+          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/6e07aab90a183d4223cd361c4f1987cd831edbcda68bb053fe587adc6304f496?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 aspect-square w-[35px]" alt="" />
+          <span class="flex-auto my-auto">Factures</span>
+        </a>
+        <a href="#" class="flex gap-3.5 self-stretch px-5 py-3 mt-2.5 font-semibold rounded-none bg-stone-300 text-slate-900 max-md:px-5">
+          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/4877e446f8e904734b8fd1a940a975fe7e8f869791dba8e9378907001b6a99d9?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 aspect-square w-[35px]" alt="" />
+          <span class="flex-auto my-auto">Clients</span>
+        </a>
+        <a href="#" class="flex gap-2.5 mt-6 ml-6 max-md:ml-2.5">
+          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/1c47c62efe91b6878db31d3e5b8abde1d7faccca153f86a7ecf64647307ff26b?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 aspect-square w-[37px]" alt="" />
+          <span class="my-auto">Prix</span>
+        </a>
+        <a href="#" class="flex gap-4 mt-8 ml-7 max-md:ml-2.5">
+          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/cdea6b1cc172ca4d56febf6cefe7d39268c99c1fb2dfce8d5117b7190b916757?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 aspect-square w-[27px]" alt="" />
+          <span class="flex-auto my-auto">Utilisateurs</span>
+        </a>
+        <a href="#" class="flex gap-4 mt-10 ml-7 max-md:ml-2.5">
+          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/b37ca8dc9c15c4961766656f8e0586e11777c6a6ff96269f71090437295e6810?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 aspect-square w-[27px]" alt="" />
+          <span class="flex-auto">Réglages</span>
+        </a>
+        <a href="#" class="flex gap-3 ml-6 mt-[659px] max-md:mt-10 max-md:ml-2.5">
+          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a3f0a623ceb557cea0148d01dc9ef0f73af94930b03a8f887496e36c052c9a90?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 w-8 aspect-square" alt="" />
+          <span class="flex-auto my-auto">Déconnexion</span>
+        </a>
+      </nav>
+    </aside>
+    <main class="flex flex-col ml-5 w-[78%] max-md:ml-0 max-md:w-full">
+      <section class="flex flex-col mt-6 text-sm max-md:mt-10 max-md:max-w-full">
+        <header class="flex gap-2.5 self-start text-3xl font-semibold whitespace-nowrap text-slate-900">
+          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/ea309900440d355f76abf6877fc6fae17ca99b36ae9d2f99f69787c656e8dff7?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 w-12 aspect-square" alt="" />
+          <h2 class="flex-auto my-auto">Clients</h2>
+        </header>
+        <section class="flex flex-col px-6 py-7 mt-20 text-black bg-white rounded-3xl shadow-sm max-md:px-5 max-md:mt-10 max-md:max-w-full">
+          <h3 class="text-2xl font-semibold text-slate-900 max-md:max-w-full">Ajouter un nouveau client</h3>
+          <form>
+            <label for="clientName" class="block mt-6 max-md:max-w-full">Nom du client :</label>
+            <input id="clientName" type="text" placeholder="Nom et prénom" class="justify-center items-start px-3 py-2.5 mt-2.5 italic font-extralight bg-white rounded-md border border-black border-solid max-md:pr-5 max-md:max-w-full w-full" />
+            <label for="clientEmail" class="block mt-5 max-md:max-w-full">Email du client</label>
+            <input id="clientEmail" type="email" placeholder="email" class="justify-center items-start p-3 mt-2.5 italic font-extralight whitespace-nowrap bg-white rounded-md border border-black border-solid max-md:pr-5 max-md:max-w-full w-full" />
+            <label for="clientPhone" class="block mt-5 max-md:max-w-full">Téléphone du client :</label>
+            <input id="clientPhone" type="tel" placeholder="Numéro de téléphone" class="justify-center items-start px-3 py-2.5 mt-1.5 italic font-extralight bg-white rounded-md border border-black border-solid max-md:pr-5 max-md:max-w-full w-full" />
+            <button type="submit" class="justify-center self-start px-3 py-2.5 mt-9 font-medium text-white rounded-md bg-slate-900">Créer fiche client</button>
+          </form>
+        </section>
+        <section class="flex flex-col px-6 pt-6 pb-20 mt-8 bg-white rounded-3xl shadow-sm max-md:px-5 max-md:max-w-full">
+          <h3 class="text-2xl font-semibold text-slate-900 max-md:max-w-full">Liste des clients</h3>
+          <form class="flex gap-5 mt-6 max-md:flex-wrap max-md:max-w-full">
+            <input type="search" placeholder="Rechercher un client" class="grow justify-center items-start p-3 italic font-extralight text-black bg-white rounded-md border border-black border-solid w-fit max-md:pr-5 max-md:max-w-full" />
+            <button type="submit" class="justify-center p-3 font-medium text-white whitespace-nowrap rounded-md bg-slate-900">Rechercher</button>
+          </form>
+          <table class="mt-4 mb-60 text-black bg-white rounded border border-solid border-zinc-400 max-md:mb-10 max-md:max-w-full">
+            <thead>
+              <tr class="font-semibold text-center whitespace-nowrap bg-white bg-opacity-0 text-slate-900">
+                <th class="flex-1 px-3 py-3 text-xs leading-4 text-black border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Numéro</th>
+                <th class="flex-1 px-3 py-2.5 border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Client</th>
+                <th class="flex-1 px-3 py-2.5 border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Email</th>
+                <th class="flex-1 px-3 py-2.5 border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Téléphone</th>
+                <th class="flex-1 px-3 py-2.5 border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white bg-opacity-0">
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">D001</td>
+                <td class="flex-1 px-3 py-2.5 border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">John Doe</td>
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">500€</td>
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">01/06/2024</td>
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">Modifer</td>
+              </tr>
+              <tr class="bg-white bg-opacity-0">
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">D002</td>
+                <td class="flex-1 px-3 py-2.5 border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">John Doe</td>
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">500€</td>
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">01/06/2024</td>
+                <td class="flex-1 px-3 py-2.5 border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">En attente</td>
+              </tr>
+              <tr class="bg-white bg-opacity-0">
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">D003</td>
+                <td class="flex-1 px-3 py-2.5 border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">John Doe</td>
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">500€</td>
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">01/06/2024</td>
+                <td class="flex-1 px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">Payée</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+  </div>
+</div>
+{% endblock %}
