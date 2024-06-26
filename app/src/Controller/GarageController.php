@@ -23,5 +23,4 @@ class GarageController extends AbstractController
         ]);
     }
 
-   
 }
