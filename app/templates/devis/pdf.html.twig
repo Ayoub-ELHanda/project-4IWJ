@@ -1,0 +1,64 @@
+{# templates/devis/pdf.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Devis {{ devis.id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button-container a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 8px 16px;
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Devis #{{ devis.id }}</h1>
+    <table>
+        <tr>
+            <th>Garage</th>
+            <td>{{ devis.garage.name }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ devis.status }}</td>
+        </tr>
+        <tr>
+            <th>Produit</th>
+            <td>{{ devis.produit.name }}</td>
+        </tr>
+        <tr>
+            <th>Prix</th>
+            <td>{{ devis.price }}</td>
+        </tr>
+        <tr>
+            <th>Created at</th>
+            <td>{{ devis.createdAt ? devis.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+    </table>
+</html>

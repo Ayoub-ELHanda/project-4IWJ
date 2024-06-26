@@ -1,9 +1,8 @@
 <?php
 
-// src/Entity/Devis.php
-
 namespace App\Entity;
 
+use App\Entity\createdat\CreatedAtTrait;
 use App\Repository\DevisRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +28,9 @@ class Devis
 
     #[ORM\Column(type: "float")]
     private ?float $price = null;
+
+    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?\DateTimeInterface $createdAt = null;
 
     public function getId(): ?int
     {
@@ -76,6 +78,17 @@ class Devis
     public function setPrice(float $price): self
     {
         $this->price = $price;
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
         return $this;
     }
 }

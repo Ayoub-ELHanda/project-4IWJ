@@ -8,6 +8,7 @@ use App\Entity\Devis;
 use App\Form\DevisType;
 use App\Repository\DevisRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/devis')]
 class DevisController extends AbstractController
 {
+    private $knpSnappyPdf;
+
+    public function __construct(Pdf $knpSnappyPdf)
+    {
+        $this->knpSnappyPdf = $knpSnappyPdf;
+    }
+
     #[Route('/', name: 'devis_index', methods: ['GET'])]
     public function index(DevisRepository $devisRepository): Response
     {
@@ -79,5 +87,24 @@ class DevisController extends AbstractController
         }
 
         return $this->redirectToRoute('devis_index');
+    }
+
+    #[Route('/{id}/pdf', name: 'devis_pdf', methods: ['GET'])]
+    public function pdf(Devis $devis): Response
+    {
+        $html = $this->renderView('devis/pdf.html.twig', [
+            'devis' => $devis,
+        ]);
+
+        $pdfContent = $this->knpSnappyPdf->getOutputFromHtml($html);
+
+        return new Response(
+            $pdfContent,
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="devis.pdf"',
+            ]
+        );
     }
 }

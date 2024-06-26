@@ -17,6 +17,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable apcu \
     && rm -rf /var/lib/apt/lists/*
 
+# Install wkhtmltopdf
+RUN apt-get update && apt-get install -y \
+    wkhtmltopdf
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
