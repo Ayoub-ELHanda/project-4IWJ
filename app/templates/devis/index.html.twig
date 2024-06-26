@@ -1,20 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DevisController!{% endblock %}
+{% block title %}Liste des devis{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Liste des devis</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Garage</th>
+                <th>Status</th>
+                <th>Produit</th>
+                <th>Prix</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for devis in devis %}
+            <tr>
+                <td>{{ devis.id }}</td>
+                <td>{{ devis.garage.name }}</td>
+                <td>{{ devis.status }}</td>
+                <td>{{ devis.produit.name }}</td>
+                <td>{{ devis.price }}</td>
+                <td>
+                    <a href="{{ path('devis_show', {'id': devis.id}) }}">voir</a>
+                    <a href="{{ path('devis_edit', {'id': devis.id}) }}">modifier</a>
+                    <form method="post" action="{{ path('devis_delete', {'id': devis.id}) }}" style="display:inline-block">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ devis.id) }}">
+                        <button type="submit">supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/symfony_docker/src/Controller/DevisController.php</code></li>
-        <li>Your template at <code>/var/www/symfony_docker/templates/devis/index.html.twig</code></li>
-    </ul>
-</div>
+    <a href="{{ path('devis_new') }}">Créer un nouveau devis</a>
 {% endblock %}

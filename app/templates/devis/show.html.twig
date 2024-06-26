@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Devis{% endblock %}
+
+{% block body %}
+    <h1>Devis</h1>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <td>{{ devis.id }}</td>
+        </tr>
+        <tr>
+            <th>Garage</th>
+            <td>{{ devis.garage.name }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ devis.status }}</td>
+        </tr>
+        <tr>
+            <th>Produit</th>
+            <td>{{ devis.produit.name }}</td>
+        </tr>
+        <tr>
+            <th>Prix</th>
+            <td>{{ devis.price }}</td>
+        </tr>
+    </table>
+
+    <a href="{{ path('devis_index') }}">Retour à la liste</a>
+    <a href="{{ path('devis_edit', {'id': devis.id}) }}">Modifier</a>
+    <form method="post" action="{{ path('devis_delete', {'id': devis.id}) }}" style="display:inline-block">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ devis.id) }}">
+        <button type="submit">Supprimer</button>
+    </form>
+{% endblock %}
