@@ -16,10 +16,26 @@ class ProduitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('price', MoneyType::class)
-            ->add('createdAt', DateTimeType::class);
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'class' => 'px-3 py-2.5 mt-2.5 italic font-extralight bg-white rounded-md border border-black border-solid w-full'
+                ]
+            ])
+            ->add('description', TextareaType::class, [
+                'attr' => [
+                    'class' => 'px-3 py-2.5 mt-2.5 italic font-extralight bg-white rounded-md border border-black border-solid w-full'
+                ]
+            ])
+            ->add('price', MoneyType::class, [
+                'attr' => [
+                    'class' => 'px-3 py-2.5 mt-2.5 italic font-extralight bg-white rounded-md border border-black border-solid w-full'
+                ]
+            ])
+            ->add('createdAt', DateTimeType::class, [
+                'attr' => [
+                    'class' => 'px-3 py-2.5 mt-2.5 italic font-extralight bg-white rounded-md border border-black border-solid w-full'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
