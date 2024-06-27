@@ -1,4 +1,12 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
-{{ form_end(form) }}
+
+  
+    {{ form_start(form) }}
+      {{ form_widget(form) }}
+      <label for="serviceDetail" class="block mt-5 max-md:max-w-full">Détail du service :</label>
+      <select id="serviceDetail" class="flex gap-5 px-3.5 py-3 mt-2.5 font-extralight bg-white rounded-md border border-black border-solid max-md:flex-wrap max-md:max-w-full w-full">
+        <option value="" selected>Sélectionnez un service</option>
+      </select>
+  </div>
+  <button class="justify-center self-end px-3 py-2.5 mr-6 rounded-md bg-slate-900 max-md:mr-2.5">Ajouter un service</button>
+  <button class="justify-center self-start px-3 py-2.5 mt-7 ml-6 rounded-md bg-slate-900 max-md:ml-2.5"><a href="{{ path('devis_new') }}">{{ button_label|default('Enregistrer') }}</a></button>
+    {{ form_end(form) }}

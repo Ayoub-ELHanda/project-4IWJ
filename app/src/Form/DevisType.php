@@ -23,14 +23,28 @@ class DevisType extends AbstractType
                 'class' => Garage::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Sélectionnez un garage',
+                'attr' => [
+                    'class' => 'px-3 py-2.5 mt-2.5 italic font-extralight bg-white rounded-md border border-black border-solid w-full'
+                ]
             ])
             ->add('produit', EntityType::class, [
                 'class' => Produit::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Sélectionnez un produit',
+                'attr' => [
+                    'class' => 'px-3 py-2.5 mt-2.5 italic font-extralight bg-white rounded-md border border-black border-solid w-full'
+                ]
             ])
-            ->add('status', TextType::class)
-            ->add('price', MoneyType::class);
+            ->add('status', TextType::class, [
+                'attr' => [
+                    'class' => 'px-3 py-2.5 mt-2.5 italic font-extralight bg-white rounded-md border border-black border-solid w-full'
+                ]
+            ])
+            ->add('price', MoneyType::class, [
+                'attr' => [
+                    'class' => 'px-3 py-2.5 mt-2.5 italic font-extralight bg-white rounded-md border border-black border-solid w-full'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
