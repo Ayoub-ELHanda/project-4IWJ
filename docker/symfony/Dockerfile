@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 # Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
@@ -27,6 +27,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Install Symfony CLI
 RUN curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+
+# Install Symfony Web Profiler Pack
+RUN composer require --dev symfony/profiler-pack
 
 # Set working directory
 WORKDIR /var/www/symfony_docker

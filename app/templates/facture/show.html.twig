@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facture{% endblock %}
+
+{% block body %}
+    <h1>Facture</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>ID</th>
+                <td>{{ facture.id }}</td>
+            </tr>
+            <tr>
+                <th>Mail</th>
+                <td>{{ facture.mail }}</td>
+            </tr>
+            <tr>
+                <th>Nom Client</th>
+                <td>{{ facture.nomClient }}</td>
+            </tr>
+            <tr>
+                <th>Téléphone</th>
+                <td>{{ facture.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Produit</th>
+                <td>{{ facture.produit.name }}</td>
+            </tr>
+            <tr>
+                <th>Prix Total</th>
+                <td>{{ facture.prixTotal }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ facture.statut }}</td>
+            </tr>
+            <tr>
+                <th>Date Validation</th>
+                <td>{{ facture.dateValidation|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Garage</th>
+                <td>{{ facture.garage.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('facture_index') }}">back to list</a>
+    <a href="{{ path('facture_edit', {'id': facture.id}) }}">edit</a>
+    <form method="post" action="{{ path('facture_delete', {'id': facture.id}) }}" style="display:inline-block;">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.id) }}">
+        <button class="btn btn-danger" type="submit">delete</button>
+    </form>
+{% endblock %}

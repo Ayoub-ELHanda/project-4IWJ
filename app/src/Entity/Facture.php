@@ -2,18 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\DevisRepository;
+use App\Repository\FactureRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: DevisRepository::class)]
-#[ORM\Table(name: "devis")]
-class Devis
+#[ORM\Entity(repositoryClass: FactureRepository::class)]
+#[ORM\Table(name: "facture")]
+class Facture
 {
-    public const STATUS_VALIDER = 'valider';
-    public const STATUS_REFUSER = 'refuser';
-    public const STATUS_EN_COURS_DE_VALIDATION = 'en cours de validation';
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
@@ -39,26 +36,23 @@ class Devis
     #[ORM\Column(type: "float")]
     #[Assert\NotBlank]
     #[Assert\Positive]
-    private ?float $produitPrix = null;
+    private ?float $prixTotal = null;
+
+    #[ORM\Column(type: "string", length: 255)]
+    private ?string $statut = null;
+
+    #[ORM\Column(type: "datetime_immutable", options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?\DateTimeInterface $dateValidation = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
-    private ?User $user = null;
-
-    #[ORM\Column(type: "string", length: 255)]
-    #[Assert\Choice(choices: [self::STATUS_VALIDER, self::STATUS_REFUSER, self::STATUS_EN_COURS_DE_VALIDATION])]
-    private ?string $statut = null;
-
-    #[ORM\Column(type: "datetime_immutable", options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeInterface $date = null;
+    private ?UserInterface $user = null; // Change to UserInterface assuming your User class implements it
 
     public function __construct()
     {
-        $this->date = new \DateTimeImmutable();
+        $this->dateValidation = new \DateTimeImmutable();
     }
-
-    // Getters and setters...
 
     public function getId(): ?int
     {
@@ -109,25 +103,14 @@ class Devis
         return $this;
     }
 
-    public function getProduitPrix(): ?float
+    public function getPrixTotal(): ?float
     {
-        return $this->produitPrix;
+        return $this->prixTotal;
     }
 
-    public function setProduitPrix(float $produitPrix): self
+    public function setPrixTotal(float $prixTotal): self
     {
-        $this->produitPrix = $produitPrix;
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
+        $this->prixTotal = $prixTotal;
         return $this;
     }
 
@@ -138,21 +121,29 @@ class Devis
 
     public function setStatut(string $statut): self
     {
-        if (!in_array($statut, [self::STATUS_VALIDER, self::STATUS_REFUSER, self::STATUS_EN_COURS_DE_VALIDATION])) {
-            throw new \InvalidArgumentException("Invalid status");
-        }
         $this->statut = $statut;
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDateValidation(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->dateValidation;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDateValidation(\DateTimeInterface $dateValidation): self
     {
-        $this->date = $date;
+        $this->dateValidation = $dateValidation;
+        return $this;
+    }
+
+    public function getUser(): ?UserInterface
+    {
+        return $this->user;
+    }
+
+    public function setUser(?UserInterface $user): self
+    {
+        $this->user = $user;
         return $this;
     }
 }

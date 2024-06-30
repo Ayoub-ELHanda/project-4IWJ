@@ -59,7 +59,7 @@
               </tr>
               <tr>
                 <th class="px-3 py-2.5 text-left">Name</th>
-                <td class="px-3 py-2.5">{{ produit.name }}</td>
+                <td class="px-3 py-2.5">{{ produit.nom }}</td>
               </tr>
               <tr>
                 <th class="px-3 py-2.5 text-left">Description</th>
@@ -67,12 +67,13 @@
               </tr>
               <tr>
                 <th class="px-3 py-2.5 text-left">Price</th>
-                <td class="px-3 py-2.5">{{ produit.price }}</td>
+                <td class="px-3 py-2.5">{{ produit.prix }}</td>
               </tr>
               <tr>
-                <th class="px-3 py-2.5 text-left">CreatedAt</th>
-                <td class="px-3 py-2.5">{{ produit.createdAt ? produit.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th class="px-3 py-2.5 text-left">DateCreate</th>
+                <td class="px-3 py-2.5">{{ produit.dateCreate ? produit.dateCreate|date('Y-m-d H:i:s') : '' }}</td>
               </tr>
+              
             </table>
           </div>
           <div class="flex justify-end mt-4 mr-6">

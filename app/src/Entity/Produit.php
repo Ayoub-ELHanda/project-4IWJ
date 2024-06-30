@@ -1,10 +1,14 @@
 <?php
 
+// src/Entity/Produit.php
+
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\User; // Add the User entity here
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -15,31 +19,42 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $name = null;
+    #[Assert\NotBlank]
+    private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::FLOAT)]
-    private ?float $price = null;
+    #[Assert\NotBlank]
+    #[Assert\Positive]
+    private ?float $prix = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?\DateTimeInterface $dateCreate = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null; // Replace Garage with User
+
+    public function __construct()
+    {
+        $this->dateCreate = new \DateTime();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getNom(): ?string
     {
-        return $this->name;
+        return $this->nom;
     }
 
-    public function setName(string $name): static
+    public function setNom(string $nom): self
     {
-        $this->name = $name;
-
+        $this->nom = $nom;
         return $this;
     }
 
@@ -48,34 +63,42 @@ class Produit
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrix(): ?float
     {
-        return $this->price;
+        return $this->prix;
     }
 
-    public function setPrice(float $price): static
+    public function setPrix(float $prix): self
     {
-        $this->price = $price;
-
+        $this->prix = $prix;
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getDateCreate(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->dateCreate;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    public function setDateCreate(\DateTimeInterface $dateCreate): self
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreate = $dateCreate;
+        return $this;
+    }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
         return $this;
     }
 }

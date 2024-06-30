@@ -38,19 +38,26 @@ class DevisController extends AbstractController
         $devis = new Devis();
         $form = $this->createForm(DevisType::class, $devis);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
+            // Get the currently logged-in user
+            $user = $this->getUser();
+            
+            // Set the user on the Devis entity
+            $devis->setUser($user);
+    
             $entityManager->persist($devis);
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('devis_index');
         }
-
+    
         return $this->render('devis/new.html.twig', [
             'devis' => $devis,
             'form' => $form->createView(),
         ]);
     }
+    
 
     #[Route('/{id}', name: 'devis_show', methods: ['GET'])]
     public function show(Devis $devis): Response
