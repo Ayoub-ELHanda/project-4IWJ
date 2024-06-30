@@ -42,23 +42,23 @@
     <table>
         <tr>
             <th>Garage</th>
-            <td>{{ devis.garage.name }}</td>
+            <td>{{ devis.user.firstname }}{{ devis.user.lastname }}</td>
         </tr>
         <tr>
             <th>Status</th>
-            <td>{{ devis.status }}</td>
+            <td>{{ devis.statut }}</td>
         </tr>
         <tr>
             <th>Produit</th>
-            <td>{{ devis.produit.name }}</td>
+            <td>{{ devis.produit.nom }}</td>
         </tr>
         <tr>
             <th>Prix</th>
-            <td>{{ devis.price }}</td>
+            <td>{{ devis.produitPrix }}</td>
         </tr>
         <tr>
             <th>Created at</th>
-            <td>{{ devis.createdAt ? devis.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            <td>{{ devis.date ? devis.date|date('Y-m-d H:i:s') : '' }}</td>
         </tr>
     </table>
 </html>
