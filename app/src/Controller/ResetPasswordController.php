@@ -58,6 +58,10 @@ class ResetPasswordController extends AbstractController
     #[Route('/reset-password/{token}', name: 'app_reset_password')]
     public function reset(Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder, string $token): Response
     {
+                        //check permittion 
+                        if (!$this->getUser()) {
+                            return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+                    }
         $user = $userRepository->findOneBy(['resetToken' => $token]);
 
         if (!$user) {

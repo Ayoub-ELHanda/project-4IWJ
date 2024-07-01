@@ -25,6 +25,13 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'E-mail'
             ])
+            ->add('garageName', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Nom du garage',
+                'required' => false, 
+            ])
             ->add('lastname', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
@@ -56,13 +63,7 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Ville'
             ])
             
-            ->add('garageName', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
-                'label' => 'Nom du garage',
-                'required' => false, 
-            ])
+            
             ->add('RGPDConsent', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

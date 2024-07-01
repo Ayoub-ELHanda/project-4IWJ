@@ -17,6 +17,10 @@ class ProduitController extends AbstractController
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
     public function index(ProduitRepository $produitRepository): Response
     {
+                        //check permittion 
+                        if (!$this->getUser()) {
+                            return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+                    }
         return $this->render('produit/index.html.twig', [
             'produits' => $produitRepository->findAll(),
         ]);
@@ -25,6 +29,10 @@ class ProduitController extends AbstractController
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+                        //check permittion 
+                        if (!$this->getUser()) {
+                            return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+                    }
         $produit = new Produit();
         $form = $this->createForm(Produit1Type::class, $produit);
         $form->handleRequest($request);
@@ -45,6 +53,10 @@ class ProduitController extends AbstractController
     #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
+                        //check permittion 
+                        if (!$this->getUser()) {
+                            return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+                    }
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
         ]);
@@ -53,6 +65,10 @@ class ProduitController extends AbstractController
     #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
+                        //check permittion 
+                        if (!$this->getUser()) {
+                            return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+                    }
         $form = $this->createForm(Produit1Type::class, $produit);
         $form->handleRequest($request);
 
@@ -71,6 +87,10 @@ class ProduitController extends AbstractController
     #[Route('/{id}', name: 'app_produit_delete', methods: ['POST'])]
     public function delete(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
+                        //check permittion 
+                        if (!$this->getUser()) {
+                            return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+                    }
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($produit);
             $entityManager->flush();

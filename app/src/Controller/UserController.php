@@ -18,6 +18,10 @@ class UserController extends AbstractController
     #[Route('/users/{id}', name: 'user_show')]
     public function show(int $id): Response
     {
+                        //check permittion 
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+        }
         // Fetch user with $id from database or other logic
         $user = 'show'; // Fetch user logic here
 

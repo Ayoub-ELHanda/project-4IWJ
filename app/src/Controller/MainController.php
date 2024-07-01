@@ -23,6 +23,11 @@ class MainController extends AbstractController
     #[Route('/Dashboard', name: 'app_Dashboard')]
     public function Dashboard(DevisRepository $devisRepository,FactureRepository $factureRepository,ClientRepository $clientRepository ): Response
     {
+
+        //check permittion 
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+        }
         $factureList = $devisRepository->findAll();
         $totalfactureAmount = array_reduce($factureList, function($total, $facture) {
             return $total + $facture->getTotalPrix();

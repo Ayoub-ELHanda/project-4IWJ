@@ -17,6 +17,10 @@ class ProfileController extends AbstractController
     #[Route('/edit', name: 'profile_edit')]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
+                        //check permittion 
+                        if (!$this->getUser()) {
+                            return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+                    }
         // Get the currently logged-in user
         $user = $this->getUser();
 

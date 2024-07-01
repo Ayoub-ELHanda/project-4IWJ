@@ -26,6 +26,10 @@ class FactureController extends AbstractController
     #[Route('/', name: 'facture_index', methods: ['GET'])]
     public function index(FactureRepository $factureRepository): Response
     {
+     //check permittion 
+    if (!$this->getUser()) {
+        return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+    }
         return $this->render('facture/index.html.twig', [
             'factures' => $factureRepository->findAll(),
         ]);
@@ -34,6 +38,10 @@ class FactureController extends AbstractController
     #[Route('/new', name: 'facture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+                //check permittion 
+                if (!$this->getUser()) {
+                    return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+            }        
         $facture = new Facture();
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
@@ -56,7 +64,11 @@ class FactureController extends AbstractController
     #[Route('/{id}', name: 'facture_show', methods: ['GET'])]
     public function show(Facture $facture): Response
     {
-        return $this->render('facture/show.html.twig', [
+                //check permittion 
+                if (!$this->getUser()) {
+                    return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+            }
+                    return $this->render('facture/show.html.twig', [
             'facture' => $facture,
         ]);
     }
@@ -64,6 +76,10 @@ class FactureController extends AbstractController
     #[Route('/{id}/edit', name: 'facture_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Facture $facture, EntityManagerInterface $entityManager): Response
     {
+                //check permittion 
+                if (!$this->getUser()) {
+                    return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+            }        
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
 
@@ -82,6 +98,10 @@ class FactureController extends AbstractController
     #[Route('/{id}', name: 'facture_delete', methods: ['POST'])]
     public function delete(Request $request, Facture $facture, EntityManagerInterface $entityManager): Response
     {
+                //check permittion 
+                if (!$this->getUser()) {
+                    return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+            }        
         if ($this->isCsrfTokenValid('delete'.$facture->getId(), $request->request->get('_token'))) {
             $entityManager->remove($facture);
             $entityManager->flush();
@@ -93,6 +113,10 @@ class FactureController extends AbstractController
     #[Route('/generate/{devisId}', name: 'facture_generate', methods: ['GET'])]
     public function generate(EntityManagerInterface $entityManager, DevisRepository $devisRepository, $devisId): Response
     {
+                //check permittion 
+                if (!$this->getUser()) {
+                    return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+            }
         $devis = $devisRepository->find($devisId);
 
         if (!$devis) {
@@ -119,6 +143,10 @@ class FactureController extends AbstractController
     #[Route('/{id}/pdf', name: 'facture_pdf', methods: ['GET'])]
     public function pdf(Facture $facture): Response
     {
+                //check permittion 
+                if (!$this->getUser()) {
+                    return $this->redirectToRoute('app_login'); // Redirect to login page if not authenticated
+            }
         $html = $this->renderView('facture/pdf.html.twig', [
             'facture' => $facture,
         ]);
