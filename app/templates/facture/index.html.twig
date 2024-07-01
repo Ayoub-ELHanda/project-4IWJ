@@ -83,6 +83,10 @@
                     <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('facture_edit', {'id': facture.id}) }}" class="mr-3">Éditer</a>
                     <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('facture_show', {'id': facture.id}) }}" class="mr-3">Voir</a>
                     <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('facture_pdf', {'id': facture.id}) }}" target="_blank">Télécharger PDF</a>
+                    <form method="post" action="{{ path('facture_delete', {'id': facture.id}) }}" style="display:inline-block">
+                      <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.id) }}">
+                      <button class="self-center px-3 py-2.5 rounded-md bg-red-600 text-white" type="submit">supprimer</button>
+                  </form>
 
                   </td>
                 </tr>
