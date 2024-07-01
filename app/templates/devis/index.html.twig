@@ -25,7 +25,7 @@
           <img loading="lazy" src="/images/produits_white.svg" class="shrink-0 aspect-square w-[37px]" alt="" />
           <span class="my-auto">Prix</span>
         </a>
-        <a href="/profile" class="flex gap-4 mt-8 ml-7 max-md:ml-2.5">
+        <a href="/users" class="flex gap-3.5 mt-6 ml-5 max-md:ml-2.5">
           <img loading="lazy" src="/images/users_white.svg" class="shrink-0 aspect-square w-[27px]" alt="" />
           <span class="flex-auto my-auto">Utilisateurs</span>
         </a>
@@ -71,7 +71,7 @@
                 <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">D00{{ devis.id }}</td>
                 <td class="px-3 py-2.5 border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">{{ devis.user.email }}</td>
                 <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">{{ devis.statut }}</td>
-                <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">{{ devis.totalPrix }}</td>
+                <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">{{ devis.totalPrix }} €</td>
                 <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">
                   <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('devis_show', {'id': devis.id}) }}">voir</a>
                   <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('devis_edit', {'id': devis.id}) }}">modifier</a>
