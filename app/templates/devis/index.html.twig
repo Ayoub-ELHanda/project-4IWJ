@@ -72,7 +72,7 @@
             <tbody>
             {% for devis in devis %}
               <tr>
-                <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">{{ devis.id }}</td>
+                <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">D00{{ devis.id }}</td>
                 <td class="px-3 py-2.5 border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">{{ devis.user.email }}</td>
                 <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">{{ devis.statut }}</td>
                 <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">{{ devis.totalPrix }}</td>
@@ -86,7 +86,7 @@
                   </form> 
                 </td>
                 <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">
-                  <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('facture_index', { 'devisId': devis.id }) }}" class="btn btn-primary">Valider la facture</a>
+                  <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('facture_generate', { 'devisId': devis.id }) }}" class="btn btn-primary">Valider la facture</a>
                 </td>
               </tr>
               {% endfor %}
