@@ -82,6 +82,8 @@
                   <td class="px-3 py-4 text-sm leading-5 text-black border-t border-l border-solid bg-black bg-opacity-0 border-zinc-400">
                     <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('facture_edit', {'id': facture.id}) }}" class="mr-3">Éditer</a>
                     <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('facture_show', {'id': facture.id}) }}" class="mr-3">Voir</a>
+                    <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('facture_pdf', {'id': facture.id}) }}" target="_blank">Télécharger PDF</a>
+
                   </td>
                 </tr>
               {% else %}

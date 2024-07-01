@@ -1,21 +1,28 @@
 <?php
 
 namespace App\Controller;
-use App\Repository\DevisRepository;
 
-use App\Entity\Devis;
 use App\Entity\Facture;
 use App\Form\FactureType;
 use App\Repository\FactureRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\DevisRepository;
 
 #[Route('/facture')]
 class FactureController extends AbstractController
 {
+    private $knpSnappyPdf;
+
+    public function __construct(Pdf $knpSnappyPdf)
+    {
+        $this->knpSnappyPdf = $knpSnappyPdf;
+    }
+
     #[Route('/', name: 'facture_index', methods: ['GET'])]
     public function index(FactureRepository $factureRepository): Response
     {
@@ -106,6 +113,25 @@ class FactureController extends AbstractController
         $entityManager->persist($facture);
         $entityManager->flush();
 
-        return $this->redirectToRoute('facture_show', ['id' => $facture->getId()]);
+        return $this->redirectToRoute('facture_index', ['id' => $facture->getId()]);
+    }
+
+    #[Route('/{id}/pdf', name: 'facture_pdf', methods: ['GET'])]
+    public function pdf(Facture $facture): Response
+    {
+        $html = $this->renderView('facture/pdf.html.twig', [
+            'facture' => $facture,
+        ]);
+
+        $pdfContent = $this->knpSnappyPdf->getOutputFromHtml($html);
+
+        return new Response(
+            $pdfContent,
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="facture.pdf"',
+            ]
+        );
     }
 }

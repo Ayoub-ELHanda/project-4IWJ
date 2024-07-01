@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Facture PDF</title>
+</head>
+<body>
+    <h1>Facture #{{ facture.id }}</h1>
+    <p>Client: {{ facture.nomClient }}</p>
+    <p>Email: {{ facture.mail }}</p>
+    <p>Telephone: {{ facture.telephone }}</p>
+    <p>Date: {{ facture.date|date('d/m/Y') }}</p>
+
+    <h2>Produits</h2>
+    <ul>
+        {% for produit in facture.produits %}
+            <li>{{ produit.nom }} - {{ produit.prix }} €</li>
+        {% endfor %}
+    </ul>
+
+    <p>Total Prix: {{ facture.totalPrix }} €</p>
+</body>
+</html>
