@@ -72,6 +72,10 @@
                 <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">
                   <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir</a>
                   <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('app_produit_edit', {'id': produit.id}) }}">Modifier</a>
+                  <form method="post" action="{{ path('app_produit_delete', {'id': produit.id}) }}" style="display:inline-block">
+                      <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
+                      <button class="self-center px-3 py-2.5 rounded-md bg-red-600 text-white" type="submit">supprimer</button>
+                  </form>
                 </td>
               </tr>
             {% else %}
