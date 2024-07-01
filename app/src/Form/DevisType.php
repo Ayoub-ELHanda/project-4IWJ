@@ -68,8 +68,9 @@ class DevisType extends AbstractType
                 'disabled' => true,
                 'attr' => [
                     'readonly' => true,
-                    'class' => 'px-3 py-2.5 mt-2.5 italic font-extralight bg-white rounded-md border border-black border-solid w-full',
+                    'class' => 'hidden',
                 ],
+                
             ])
             ->add('statut', ChoiceType::class, [
                 'choices' => [
