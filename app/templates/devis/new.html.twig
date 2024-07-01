@@ -5,7 +5,7 @@
 {% block body %}
 <div class="pr-12 bg-gray-50 bg-opacity-0 max-md:pr-5">
   <div class="flex gap-5 max-md:flex-col max-md:gap-0">
-    <!-- Sidebar code omitted for brevity -->
+    <!-- Code de la barre latérale omis pour la concision -->
     <main class="flex flex-col ml-5 w-[78%] max-md:ml-0 max-md:w-full">
       <section class="flex flex-col mt-6 text-sm max-md:mt-10 max-md:max-w-full">
         <a href="{{ path('devis_index') }}"> <- Retour à la liste</a>
@@ -14,12 +14,15 @@
             <h3 class="text-2xl font-semibold text-slate-900 max-md:max-w-full">Créer un nouveau devis</h3>
             {{ form_start(form) }}
               {{ form_row(form.user) }}
-              {{ form_row(form.produit) }}
+              {{ form_row(form.produits) }}
+              <div>
+                <label>Total Prix des Produits:</label>
+                <span>{{ form_widget(form.totalPrix) }}</span>
+            </div>
               {{ form_row(form.statut) }}
               {{ form_row(form.mail) }}
               {{ form_row(form.nomClient) }}
               {{ form_row(form.telephone) }}
-              {{ form_row(form.produitPrix) }}
               <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
             {{ form_end(form) }}
           </div>

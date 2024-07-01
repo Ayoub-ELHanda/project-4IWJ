@@ -1,0 +1,35 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset Password{% endblock %}
+
+{% block body %}
+<section class="flex overflow-hidden relative flex-col items-center px-4 pt-8 pb-4 min-h-screen">
+    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/2dcf5d9489e98e396168fe824351811316e64c09fb527db12388dce9c09ba3a5?apiKey=8247e33786d041d6ac5b339a992b1663&" alt="" class="object-cover absolute inset-0 w-full h-full" />
+    <div class="flex relative flex-col items-center w-full max-w-3xl">
+
+        <h1 class="text-4xl font-semibold text-white">GarageGenius</h1>
+
+        <div class="mt-8 w-full max-w-full">
+            <form action="{{ path('app_forgot_password_request') }}" method="post" class="flex flex-col grow px-6 py-8 w-full text-xl font-semibold text-black bg-white rounded-3xl">
+                {% if app.flashes('success') %}
+                    {% for message in app.flashes('success') %}
+                        <div class="text-green-500 mb-3">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if app.flashes('danger') %}
+                    {% for message in app.flashes('danger') %}
+                        <div class="text-red-500 mb-3">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {{ form_row(requestForm.email) }}
+
+                <button type="submit"
+                    class="mt-6 py-3 px-6 text-white rounded-lg bg-blue-600 hover:bg-blue-700">Send Password Reset Email</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

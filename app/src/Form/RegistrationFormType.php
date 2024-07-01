@@ -55,6 +55,14 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Ville'
             ])
+            
+            ->add('garageName', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Nom du garage',
+                'required' => false, 
+            ])
             ->add('RGPDConsent', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -65,8 +73,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'En m\'inscrivant à ce site j\'accepte...'
             ])
             ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
@@ -79,7 +85,6 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],

@@ -45,3 +45,12 @@ services:
     image: adminer:latest
     ports:
       - "8081:8080"
+    depends_on:
+      - postgres
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    container_name: mailhog

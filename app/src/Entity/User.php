@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Entity;
-
 use App\Entity\createdat\CreatedAtTrait;
+
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -54,6 +54,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $resetToken;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $garageName;
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
@@ -72,42 +75,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_ADMIN';
-
+        $roles[] = 'ROLE_USER';
         return array_unique($roles);
     }
 
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
-
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -116,16 +104,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
 
@@ -137,7 +120,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
-
         return $this;
     }
 
@@ -149,7 +131,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
-
         return $this;
     }
 
@@ -161,7 +142,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAddress(string $address): self
     {
         $this->address = $address;
-
         return $this;
     }
 
@@ -173,7 +153,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setZipcode(string $zipcode): self
     {
         $this->zipcode = $zipcode;
-
         return $this;
     }
 
@@ -185,7 +164,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCity(string $city): self
     {
         $this->city = $city;
-
         return $this;
     }
 
@@ -197,7 +175,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $is_verified): self
     {
         $this->is_verified = $is_verified;
-
         return $this;
     }
 
@@ -209,7 +186,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setResetToken(?string $resetToken): self
     {
         $this->resetToken = $resetToken;
+        return $this;
+    }
 
+    public function getGarageName(): ?string
+    {
+        return $this->garageName;
+    }
+
+    public function setGarageName(?string $garageName): self
+    {
+        $this->garageName = $garageName;
         return $this;
     }
 }

@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\DevisRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DevisRepository::class)]
 #[ORM\Table(name: "devis")]
+
 class Devis
 {
     public const STATUS_VALIDER = 'valider';
@@ -31,15 +34,13 @@ class Devis
     #[Assert\NotBlank]
     private ?string $telephone = null;
 
-    #[ORM\ManyToOne(targetEntity: Produit::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank]
-    private ?Produit $produit = null;
+    #[ORM\ManyToMany(targetEntity: Produit::class)]
+    private Collection $produits;
 
     #[ORM\Column(type: "float")]
     #[Assert\NotBlank]
     #[Assert\Positive]
-    private ?float $produitPrix = null;
+    private ?float $totalPrix = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
@@ -55,6 +56,7 @@ class Devis
 
     public function __construct()
     {
+        $this->produits = new ArrayCollection();
         $this->date = new \DateTimeImmutable();
     }
 
@@ -98,25 +100,40 @@ class Devis
         return $this;
     }
 
-    public function getProduit(): ?Produit
+    public function getProduits(): Collection
     {
-        return $this->produit;
+        return $this->produits;
     }
 
-    public function setProduit(?Produit $produit): self
+    public function addProduit(Produit $produit): self
     {
-        $this->produit = $produit;
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+        }
+
         return $this;
     }
 
-    public function getProduitPrix(): ?float
+    public function removeProduit(Produit $produit): self
     {
-        return $this->produitPrix;
+        $this->produits->removeElement($produit);
+
+        return $this;
     }
 
-    public function setProduitPrix(float $produitPrix): self
+    public function getTotalPrix(): ?float
     {
-        $this->produitPrix = $produitPrix;
+        // Calculate total price from selected products
+        $total = 0.0;
+        foreach ($this->produits as $produit) {
+            $total += $produit->getPrix();
+        }
+        return $total;
+    }
+
+    public function setTotalPrix(float $totalPrix): self
+    {
+        $this->totalPrix = $totalPrix;
         return $this;
     }
 

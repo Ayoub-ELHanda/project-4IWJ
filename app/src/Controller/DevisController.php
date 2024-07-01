@@ -45,7 +45,6 @@ class DevisController extends AbstractController
             
             // Set the user on the Devis entity
             $devis->setUser($user);
-    
             $entityManager->persist($devis);
             $entityManager->flush();
     
