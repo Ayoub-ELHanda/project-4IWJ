@@ -17,7 +17,7 @@
           <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/9ca562d9c55613c202775458c0966e04fcdca537296cbb71efdbbc7f1b379484?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 aspect-square w-[35px]" alt=""/>
           <span class="flex-auto my-auto">Devis</span>
         </a>
-        <a href="#" class="flex gap-3.5 mt-6 ml-5 max-md:ml-2.5">
+        <a href="/facture" class="flex gap-3.5 mt-6 ml-5 max-md:ml-2.5">
           <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/29fab34109abc1107b86c35a093db49bce40cd32e0fcce3f28a84cffc0d0f306?apiKey=8247e33786d041d6ac5b339a992b1663&" class="shrink-0 aspect-square w-[35px]" alt=""/>
           <span class="flex-auto my-auto">Factures</span>
         </a>
@@ -66,6 +66,7 @@
                 <th class="px-3 py-2.5 border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Status</th>
                 <th class="px-3 py-2.5 border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Prix</th>
                 <th class="px-3 py-2.5 border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Actions</th>
+                <th class="px-3 py-2.5 border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Valider</th>
               </tr>
             </thead>
             <tbody>
@@ -76,16 +77,16 @@
                 <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">{{ devis.statut }}</td>
                 <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">{{ devis.totalPrix }}</td>
                 <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">
-                  <a href="{{ path('devis_show', {'id': devis.id}) }}">voir</a>
-                  <a href="{{ path('devis_edit', {'id': devis.id}) }}">modifier</a>
-                  <a href="{{ path('devis_pdf', {'id': devis.id}) }}" target="_blank">Télécharger PDF</a>
-                  <td>
-                    <a href="{{ path('facture_generate', { 'devisId': devis.id }) }}" class="btn btn-primary">Generate Facture</a>
-                  </td>
+                  <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('devis_show', {'id': devis.id}) }}">voir</a>
+                  <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('devis_edit', {'id': devis.id}) }}">modifier</a>
+                  <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('devis_pdf', {'id': devis.id}) }}" target="_blank">Télécharger PDF</a>
                   <form method="post" action="{{ path('devis_delete', {'id': devis.id}) }}" style="display:inline-block">
                       <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ devis.id) }}">
-                      <button type="submit">supprimer</button>
-                  </form>
+                      <button class="self-center px-3 py-2.5 rounded-md bg-red-600 text-white" type="submit">supprimer</button>
+                  </form> 
+                </td>
+                <td class="px-3 py-2.5 whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400">
+                  <a class="self-center px-3 py-2.5 rounded-md bg-slate-900 text-white" href="{{ path('facture_index', { 'devisId': devis.id }) }}" class="btn btn-primary">Valider la facture</a>
                 </td>
               </tr>
               {% endfor %}

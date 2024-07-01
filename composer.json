@@ -1,5 +1,6 @@
 {
     "require": {
-        "knplabs/knp-snappy-bundle": "^1.10"
+        "knplabs/knp-snappy-bundle": "^1.10",
+        "symfony/mailer": "^7.1"
     }
 }
