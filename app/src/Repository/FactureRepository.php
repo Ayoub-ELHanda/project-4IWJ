@@ -7,6 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @extends ServiceEntityRepository<Facture>
+ *
  * @method Facture|null find($id, $lockMode = null, $lockVersion = null)
  * @method Facture|null findOneBy(array $criteria, array $orderBy = null)
  * @method Facture[]    findAll()
@@ -19,6 +21,5 @@ class FactureRepository extends ServiceEntityRepository
         parent::__construct($registry, Facture::class);
     }
 
-    // Add custom query methods here
+    // Add your custom query methods here
 }
-

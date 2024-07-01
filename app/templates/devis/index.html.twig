@@ -79,6 +79,9 @@
                   <a href="{{ path('devis_show', {'id': devis.id}) }}">voir</a>
                   <a href="{{ path('devis_edit', {'id': devis.id}) }}">modifier</a>
                   <a href="{{ path('devis_pdf', {'id': devis.id}) }}" target="_blank">Télécharger PDF</a>
+                  <td>
+                    <a href="{{ path('facture_generate', { 'devisId': devis.id }) }}" class="btn btn-primary">Generate Facture</a>
+                  </td>
                   <form method="post" action="{{ path('devis_delete', {'id': devis.id}) }}" style="display:inline-block">
                       <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ devis.id) }}">
                       <button type="submit">supprimer</button>

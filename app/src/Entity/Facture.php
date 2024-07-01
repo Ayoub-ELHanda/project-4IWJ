@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Entity;
-
 use App\Repository\FactureRepository;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: FactureRepository::class)]
 #[ORM\Table(name: "facture")]
@@ -28,31 +29,29 @@ class Facture
     #[Assert\NotBlank]
     private ?string $telephone = null;
 
-    #[ORM\ManyToOne(targetEntity: Produit::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank]
-    private ?Produit $produit = null;
+    #[ORM\ManyToMany(targetEntity: Produit::class)]
+    private Collection $produits;
 
     #[ORM\Column(type: "float")]
     #[Assert\NotBlank]
     #[Assert\Positive]
-    private ?float $prixTotal = null;
-
-    #[ORM\Column(type: "string", length: 255)]
-    private ?string $statut = null;
-
-    #[ORM\Column(type: "datetime_immutable", options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeInterface $dateValidation = null;
+    private ?float $totalPrix = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank]
-    private ?UserInterface $user = null; // Change to UserInterface assuming your User class implements it
+    private ?User $user = null;
+
+    #[ORM\Column(type: "datetime_immutable", options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?\DateTimeInterface $date = null;
 
     public function __construct()
     {
-        $this->dateValidation = new \DateTimeImmutable();
+        $this->produits = new ArrayCollection();
+        $this->date = new \DateTimeImmutable();
     }
+
+    // Getters and setters...
 
     public function getId(): ?int
     {
@@ -92,58 +91,64 @@ class Facture
         return $this;
     }
 
-    public function getProduit(): ?Produit
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduits(): Collection
     {
-        return $this->produit;
+        return $this->produits;
     }
 
-    public function setProduit(?Produit $produit): self
+    public function addProduit(Produit $produit): self
     {
-        $this->produit = $produit;
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+        }
+
         return $this;
     }
 
-    public function getPrixTotal(): ?float
+    public function removeProduit(Produit $produit): self
     {
-        return $this->prixTotal;
-    }
+        $this->produits->removeElement($produit);
 
-    public function setPrixTotal(float $prixTotal): self
-    {
-        $this->prixTotal = $prixTotal;
         return $this;
     }
 
-    public function getStatut(): ?string
+    public function getTotalPrix(): ?float
     {
-        return $this->statut;
+        $total = 0.0;
+        foreach ($this->produits as $produit) {
+            $total += $produit->getPrix();
+        }
+        return $total;
     }
 
-    public function setStatut(string $statut): self
+    public function setTotalPrix(float $totalPrix): self
     {
-        $this->statut = $statut;
+        $this->totalPrix = $totalPrix;
         return $this;
     }
 
-    public function getDateValidation(): ?\DateTimeInterface
-    {
-        return $this->dateValidation;
-    }
-
-    public function setDateValidation(\DateTimeInterface $dateValidation): self
-    {
-        $this->dateValidation = $dateValidation;
-        return $this;
-    }
-
-    public function getUser(): ?UserInterface
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?UserInterface $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
         return $this;
     }
 }

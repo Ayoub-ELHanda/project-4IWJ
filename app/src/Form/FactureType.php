@@ -1,22 +1,23 @@
 <?php
 
 namespace App\Form;
-
-use App\Entity\Produit;
+use App\Entity\Devis;
+use App\Entity\User;
 use App\Entity\Facture;
-use App\Entity\User; 
+use App\Entity\Produit;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class FactureType extends AbstractType
 {
-    private $tokenStorage;
+    private TokenStorageInterface $tokenStorage;
 
     public function __construct(TokenStorageInterface $tokenStorage)
     {
@@ -25,30 +26,62 @@ class FactureType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // Get the currently logged-in user
-        $token = $this->tokenStorage->getToken();
-        $user = $token->getUser();
-
         $builder
-            ->add('mail', EmailType::class)
+            ->add('mail', TextType::class)
             ->add('nomClient', TextType::class)
             ->add('telephone', TextType::class)
-            ->add('produit', EntityType::class, [
-                'class' => Produit::class,
-                'choice_label' => 'nom',
-            ])
-            ->add('prixTotal', MoneyType::class, [
-                'currency' => 'EUR',
-            ])
-            ->add('statut', TextType::class)
-            ->add('dateValidation', TextType::class, [
-                'disabled' => true,
-                'data' => (new \DateTime())->format('Y-m-d H:i:s'),
-            ])
             ->add('user', TextType::class, [
-                'data' => $user->getUser->getFirstname.$user->getUser->getLastname, // Display only the username of the logged-in user
-                'disabled' => true, // Disable editing of this field
+                'disabled' => true,
+                'data' => $this->getUserGarageName(),
+                'required' => false,
+            ])
+            ->add('produits', EntityType::class, [
+                'class' => Produit::class,
+                'choice_label' => function (Produit $produit) {
+                    return $produit->getNom() . ' - ' . $produit->getPrix() . ' €';
+                },
+                'multiple' => true,
+                'expanded' => true,
+                'required' => true,
+            ])
+            ->add('totalPrix', MoneyType::class, [
+                'label' => 'Total Prix des Produits',
+                'currency' => 'EUR',
+                'mapped' => false,
+                'disabled' => true,
+                'attr' => [
+                    'readonly' => true,
+                ],
             ]);
+
+        // Event listener for calculating totalPrix on form pre-set data
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData']);
+
+        // Event listener for updating totalPrix on produits selection changes
+        $builder->get('produits')->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($builder) {
+            $form = $event->getForm()->getParent();
+            $produits = $event->getForm()->getData();
+
+            $totalPrix = 0;
+            foreach ($produits as $produit) {
+                $totalPrix += $produit->getPrix();
+            }
+
+            $form->get('totalPrix')->setData($totalPrix);
+        });
+
+        // Event listener to update totalPrix when data is submitted (necessary for initial display)
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+            $form = $event->getForm();
+            $facture = $event->getData();
+
+            $totalPrix = 0;
+            foreach ($facture->getProduits() as $produit) {
+                $totalPrix += $produit->getPrix();
+            }
+
+            $facture->setTotalPrix($totalPrix);
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -56,5 +89,35 @@ class FactureType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Facture::class,
         ]);
+    }
+
+    private function getUserGarageName(): string
+    {
+        $token = $this->tokenStorage->getToken();
+        $user = $token->getUser();
+
+        if ($user instanceof User) {
+            return $user->getGarageName() ?? '';
+        }
+
+        return '';
+    }
+
+    public function onPreSetData(FormEvent $event)
+    {
+        $form = $event->getForm();
+        $data = $event->getData();
+
+        // Calculate totalPrix if produits are already set
+        if ($data instanceof Facture && !empty($data->getProduits())) {
+            $totalPrix = 0;
+
+            foreach ($data->getProduits() as $produit) {
+                $totalPrix += $produit->getPrix();
+            }
+
+            // Set the calculated totalPrix to the form field
+            $form->get('totalPrix')->setData($totalPrix);
+        }
     }
 }

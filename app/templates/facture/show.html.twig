@@ -1,55 +1,41 @@
+{# templates/facture/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Facture{% endblock %}
+{% block title %}Liste des Factures{% endblock %}
 
 {% block body %}
-    <h1>Facture</h1>
+    <h1>Liste des Factures</h1>
 
     <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom Client</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col">Total Prix</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
         <tbody>
-            <tr>
-                <th>ID</th>
-                <td>{{ facture.id }}</td>
-            </tr>
-            <tr>
-                <th>Mail</th>
-                <td>{{ facture.mail }}</td>
-            </tr>
-            <tr>
-                <th>Nom Client</th>
-                <td>{{ facture.nomClient }}</td>
-            </tr>
-            <tr>
-                <th>Téléphone</th>
-                <td>{{ facture.telephone }}</td>
-            </tr>
-            <tr>
-                <th>Produit</th>
-                <td>{{ facture.produit.name }}</td>
-            </tr>
-            <tr>
-                <th>Prix Total</th>
-                <td>{{ facture.prixTotal }}</td>
-            </tr>
-            <tr>
-                <th>Statut</th>
-                <td>{{ facture.statut }}</td>
-            </tr>
-            <tr>
-                <th>Date Validation</th>
-                <td>{{ facture.dateValidation|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Garage</th>
-                <td>{{ facture.garage.name }}</td>
-            </tr>
+            {% for facture in facture %}
+                <tr>
+                    <th scope="row">{{ facture.id }}</th>
+                    <td>{{ facture.nomClient }}</td>
+                    <td>{{ facture.telephone }}</td>
+                    <td>{{ facture.totalPrix }}</td>
+                    <td>
+                        <a href="{{ path('facture_show', {'id': facture.id}) }}" class="btn btn-info">Voir</a>
+                        <a href="{{ path('facture_edit', {'id': facture.id}) }}" class="btn btn-warning">Modifier</a>
+                        <form method="post" action="{{ path('facture_delete', {'id': facture.id}) }}" style="display:inline-block;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.id) }}">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette facture?')">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('facture_index') }}">back to list</a>
-    <a href="{{ path('facture_edit', {'id': facture.id}) }}">edit</a>
-    <form method="post" action="{{ path('facture_delete', {'id': facture.id}) }}" style="display:inline-block;">
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.id) }}">
-        <button class="btn btn-danger" type="submit">delete</button>
-    </form>
+    <a href="{{ path('facture_new') }}" class="btn btn-success">Nouvelle Facture</a>
 {% endblock %}

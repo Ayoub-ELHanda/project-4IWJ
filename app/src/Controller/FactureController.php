@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Controller;
+use App\Repository\DevisRepository;
 
+use App\Entity\Devis;
 use App\Entity\Facture;
 use App\Form\FactureType;
 use App\Repository\FactureRepository;
@@ -17,10 +19,30 @@ class FactureController extends AbstractController
     #[Route('/', name: 'facture_index', methods: ['GET'])]
     public function index(FactureRepository $factureRepository): Response
     {
-        $factures = $factureRepository->findAll();
-
         return $this->render('facture/index.html.twig', [
-            'factures' => $factures,
+            'factures' => $factureRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/new', name: 'facture_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $facture = new Facture();
+        $form = $this->createForm(FactureType::class, $facture);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+            $facture->setUser($user);
+            $entityManager->persist($facture);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('facture_index');
+        }
+
+        return $this->render('facture/new.html.twig', [
+            'facture' => $facture,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -41,7 +63,7 @@ class FactureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('facture_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('facture_index');
         }
 
         return $this->render('facture/edit.html.twig', [
@@ -58,7 +80,32 @@ class FactureController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('facture_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('facture_index');
+    }
+
+    #[Route('/generate/{devisId}', name: 'facture_generate', methods: ['GET'])]
+    public function generate(EntityManagerInterface $entityManager, DevisRepository $devisRepository, $devisId): Response
+    {
+        $devis = $devisRepository->find($devisId);
+
+        if (!$devis) {
+            throw $this->createNotFoundException('The Devis does not exist');
+        }
+
+        $facture = new Facture();
+        $facture->setMail($devis->getMail());
+        $facture->setNomClient($devis->getNomClient());
+        $facture->setTelephone($devis->getTelephone());
+        $facture->setUser($devis->getUser());
+        $facture->setDate(new \DateTimeImmutable());
+        foreach ($devis->getProduits() as $produit) {
+            $facture->addProduit($produit);
+        }
+        $facture->setTotalPrix($devis->getTotalPrix());
+
+        $entityManager->persist($facture);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('facture_show', ['id' => $facture->getId()]);
     }
 }
-

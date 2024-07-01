@@ -1,47 +1,41 @@
+{# templates/facture/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Factures{% endblock %}
+{% block title %}Liste des Factures{% endblock %}
 
 {% block body %}
-    <h1>Factures</h1>
+    <h1>Liste des Factures</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Mail</th>
-                <th>Nom Client</th>
-                <th>Téléphone</th>
-                <th>Produit</th>
-                <th>Prix Total</th>
-                <th>Statut</th>
-                <th>Date Validation</th>
-                <th>Garage</th>
-                <th>Actions</th>
+                <th scope="col">#</th>
+                <th scope="col">Nom Client</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col">Total Prix</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for facture in factures %}
                 <tr>
-                    <td>{{ facture.id }}</td>
-                    <td>{{ facture.mail }}</td>
+                    <th scope="row">{{ facture.id }}</th>
                     <td>{{ facture.nomClient }}</td>
                     <td>{{ facture.telephone }}</td>
-                    <td>{{ facture.produit.name }}</td>
-                    <td>{{ facture.prixTotal }}</td>
-                    <td>{{ facture.statut }}</td>
-                    <td>{{ facture.dateValidation|date('Y-m-d H:i:s') }}</td>
-                    <td>{{ facture.garage.name }}</td>
+                    <td>{{ facture.totalPrix }}</td>
                     <td>
-                        <a href="{{ path('facture_show', {'id': facture.id}) }}">show</a>
-                        <a href="{{ path('facture_edit', {'id': facture.id}) }}">edit</a>
+                        <a href="{{ path('facture_show', {'id': facture.id}) }}" class="btn btn-info">Voir</a>
+                        <a href="{{ path('facture_edit', {'id': facture.id}) }}" class="btn btn-warning">Modifier</a>
                         <form method="post" action="{{ path('facture_delete', {'id': facture.id}) }}" style="display:inline-block;">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.id) }}">
-                            <button class="btn btn-danger" type="submit">delete</button>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette facture?')">Supprimer</button>
                         </form>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <a href="{{ path('facture_new') }}" class="btn btn-success">Nouvelle Facture</a>
 {% endblock %}
