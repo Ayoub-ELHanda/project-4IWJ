@@ -1,70 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Devis {{ devis.id }}</title>
+    <title>Devis #{{ devis.id }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
         }
-        table {
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #011638;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1, .header h2 {
+            margin: 0;
+        }
+        .header h2 {
+            color: #011638;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .info table, .products table, .total table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
         th, td {
+            padding: 10px;
             border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
         }
         th {
             background-color: #f2f2f2;
+            text-align: left;
+            font-weight: normal;
         }
-        .button-container {
-            margin-top: 20px;
-        }
-        .button-container a {
-            display: inline-block;
-            margin-right: 10px;
-            padding: 8px 16px;
-            text-decoration: none;
-            background-color: #4CAF50;
+        .products th, .total th {
+            background-color: #011638;
             color: white;
-            border-radius: 5px;
+        }
+        .products ul {
+            padding-left: 20px;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .products ul li {
+            padding: 5px 0;
+        }
+        .right {
+            text-align: right;
+        }
+        .total .right {
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Devis #{{ devis.id }}</h1>
-    <table>
-        <tr>
-            <th>Garage</th>
-            <td>{{ devis.user.firstname }} {{ devis.user.lastname }}</td>
-        </tr>
-        <tr>
-            <th>Status</th>
-            <td>{{ devis.statut }}</td>
-        </tr>
-        <tr>
-            <th>Produits</th>
-            <td>
-                <ul>
-                    {% for produit in devis.produits %}
-                        <li>{{ produit.nom }} - {{ produit.prix }} €</li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <th>Total Prix</th>
-            <td>{{ devis.totalPrix }} €</td>
-        </tr>
-        <tr>
-            <th>Created at</th>
-            <td>{{ devis.date ? devis.date|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-    </table>
+    <div class="container">
+        <div class="header">
+            <h1>GarageGenius</h1>
+            <br>
+            <h2>Devis</h2>
+            <br><br><br><br><br><br><br>
+        </div>
+        <div class="section info">
+            <table>
+                <tr>
+                    <th>Devis N°:</th>
+                    <td>D00{{ devis.id }}</td>
+                </tr>
+                <tr>
+                    <th>Date:</th>
+                    <td>{{ devis.date ? devis.date|date('d/m/Y H:i') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Client:</th>
+                    <td>{{ devis.nomClient }}</td>
+                </tr>
+                <tr>
+                    <th>numéro du client:</th>
+                    <td>{{ devis.telephone }}</td>
+                </tr>
+                <tr>
+                    <th>Adresse:</th>
+                    <td>{{ devis.user.address }}</td>
+                </tr>
+            </table>
+        </div>
+        <br><br><br><br><br><br><br>
+        <div class="section products">
+            <h3>Produits/Services</h3>
+            <table>
+                <tr>
+                    <th>Description</th>
+                    <th class="right">Prix Unitaire HT(€)</th>
+                    <th class="right">TVA(€)</th>
+                    <th class="right">Prix Unitaire TTC(€)</th>
+                </tr>
+                {% for produit in devis.produits %}
+                <tr>
+                    <td>{{ produit.nom }}</td>
+                    <td class="right">{{ produit.prix | number_format(2, '.', ',') }} €</td>
+                    <td class="right">{{ (produit.prix * 0.2) | number_format(2, '.', ',') }} €</td>
+                    <td class="right">{{ (produit.prix * 1.2) | number_format(2, '.', ',') }} €</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <br><br><br><br><br><br><br>
+        <div class="section total">
+            <h3>Total</h3>
+            <table>
+                <tr>
+                    <th>Total HT</th>
+                    <td class="right">{{ devis.totalPrix | number_format(2, '.', ',') }} €</td>
+                </tr>
+                <tr>
+                    <th>TVA (20%)</th>
+                    <td class="right">{{ (devis.totalPrix * 0.2) | number_format(2, '.', ',') }} €</td>
+                </tr>
+                <tr>
+                    <th>Total TTC</th>
+                    <td class="right">{{ (devis.totalPrix * 1.2) | number_format(2, '.', ',') }} €</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            <p>Merci de votre confiance.</p>
+            <p>GarageGenius, 123 Avenue de la Réparation, 75000 Paris</p>
+            <p>Email: contact@garagegenius.com | Téléphone: 01 23 45 67 89</p>
+        </div>
+    </div>
 </body>
 </html>
