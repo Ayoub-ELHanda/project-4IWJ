@@ -20,9 +20,7 @@ class ProfileController extends AbstractController
         // Get the currently logged-in user
         $user = $this->getUser();
 
-        // Fetch the user from EntityManager (optional if already retrieved by getUser())
-        // $userRepository = $entityManager->getRepository(User::class);
-        // $user = $userRepository->find($user->getId());
+        
 
         // Ensure user exists
         if (!$user instanceof User) {

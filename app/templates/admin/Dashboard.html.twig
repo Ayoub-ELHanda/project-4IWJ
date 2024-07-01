@@ -3,7 +3,7 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
-<div class="pr-12 bg-white max-md:pr-5">
+<div class="pr-12 bg-neutral-100 max-md:pr-5">
   <div class="flex gap-5 max-md:flex-col max-md:gap-0">
     <aside class="flex flex-col w-[22%] max-md:ml-0 max-md:w-full">
       <nav class="flex flex-col grow items-start py-9 pl-3.5 mx-auto w-full text-2xl text-white whitespace-nowrap bg-slate-900 max-md:mt-10">
@@ -54,25 +54,27 @@
             <article class="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">
               <div class="flex flex-col grow px-6 py-11 w-full text-2xl font-semibold bg-white rounded-3xl shadow-sm max-md:px-5 max-md:mt-9">
                 <h3 class="text-slate-900">Factures émises</h3>
-                <p class="self-center mt-8 text-stone-300">150</p>
+                
+                <p class="self-center mt-8 text-stone-300">{{ factureCount }}</p>
+               
               </div>
             </article>
             <article class="flex flex-col ml-5 w-3/12 max-md:ml-0 max-md:w-full">
               <div class="flex flex-col grow px-10 py-11 w-full text-2xl font-semibold bg-white rounded-3xl shadow-sm max-md:px-5 max-md:mt-9">
                 <h3 class="text-slate-900">Devis générés</h3>
-                <p class="self-center mt-7 text-stone-300">75</p>
+                <p class="self-center mt-7 text-stone-300">{{ factureCount }}</p>
               </div>
             </article>
             <article class="flex flex-col ml-5 w-3/12 max-md:ml-0 max-md:w-full">
               <div class="flex flex-col grow px-4 py-11 w-full text-2xl font-semibold bg-white rounded-3xl shadow-sm max-md:mt-9">
                 <h3 class="text-slate-900">Total des revenus</h3>
-                <p class="self-center mt-8 text-stone-300">35 000 €</p>
+                <p class="self-center mt-8 text-stone-300">{{ totalfactureAmount }}€</p>
               </div>
             </article>
             <article class="flex flex-col ml-5 w-3/12 max-md:ml-0 max-md:w-full">
               <div class="flex flex-col grow px-20 py-11 w-full text-2xl font-semibold whitespace-nowrap bg-white rounded-3xl shadow-sm max-md:px-5 max-md:mt-9">
                 <h3 class="text-slate-900 max-md:mx-1">Clients</h3>
-                <p class="self-center mt-8 text-stone-300">300</p>
+                <p class="self-center mt-8 text-stone-300">{{ clientCount }}</p>
               </div>
             </article>
           </div>
@@ -82,27 +84,21 @@
             <section class="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
               <div class="flex flex-col items-start pt-6 pr-20 pb-20 pl-6 w-full text-sm bg-white rounded-3xl shadow-sm text-slate-900 max-md:px-5 max-md:mt-9 max-md:max-w-full">
                 <h3 class="text-2xl font-semibold">Activités recentes</h3>
+                {% for facture in factureList %}
                 <ul class="mt-6 list-none">
-                  <li class="mt-5">Nouvelle facture créée pour John Doe 500€</li>
-                  <li class="mt-5">Nouvelle facture créée pour John Doe 500€</li>
-                  <li class="mt-5">Nouvelle facture créée pour John Doe 500€</li>
-                  <li class="mt-5">Nouvelle facture créée pour John Doe 500€</li>
-                  <li class="mt-5">Nouvelle facture créée pour John Doe 500€</li>
-                  <li class="mt-5">Nouvelle facture créée pour John Doe 500€</li>
+                  <li class="mt-5">Nouvelle facture créée pour {{ facture.nomClient }} {{ facture.totalPrix }}€</li>
                 </ul>
+                {% endfor %}
               </div>
             </section>
             <section class="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
               <div class="flex flex-col grow items-start pt-6 pr-20 pb-20 pl-6 w-full text-sm bg-white rounded-3xl shadow-sm text-slate-900 max-md:px-5 max-md:mt-9 max-md:max-w-full">
                 <h3 class="text-2xl font-semibold">Activités a réaliser aujourd'hui</h3>
+                {% for devis in devisList %}
                 <ul class="mt-5 list-none">
-                  <li class="mt-5">Pare choc avant megane 4</li>
-                  <li class="mt-5">Restitution client Mr John Doe</li>
-                  <li class="mt-6">Changer plaquette de freins GT3</li>
-                  <li class="mt-5">Changer embrayage RS6</li>
-                  <li class="mt-5">Changer plaquette de freins GT3</li>
-                  <li class="mt-5">Pare choc avant megane 4</li>
+                  <li class="mt-5">Nouvelle devis créée pour {{ devis.nomClient}} {{ devis.totalPrix }}€</li>
                 </ul>
+                {% endfor %}
               </div>
             </section>
           </div>
@@ -120,27 +116,17 @@
               </tr>
             </thead>
             <tbody>
+              
+             
+              {% for facture in factureList %}
               <tr class="bg-white bg-opacity-0">
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">D001</td>
-                <td class="border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">John Doe</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">500€</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">01/06/2024</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">Payée</td>
+                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">{{ facture.id }}</td>
+                <td class="border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">{{ facture.nomClient }}</td>
+                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">{{ facture.totalPrix }}€</td>
+                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">{{ facture.date|date('d/m/Y') }}</td>
+                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">{{ facture.statut }}</td>
               </tr>
-              <tr class="bg-white bg-opacity-0">
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">D002</td>
-                <td class="border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">John Doe</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">500€</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">01/06/2024</td>
-                <td class="border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">En attente</td>
-              </tr>
-              <tr class="bg-white bg-opacity-0">
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">D003</td>
-                <td class="border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">John Doe</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">500€</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">01/06/2024</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">Payée</td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
         </section>
@@ -148,6 +134,7 @@
           <h3 class="text-2xl font-semibold text-slate-900 max-md:max-w-full">Dernières factures</h3>
           <table class="mt-9 text-sm text-black bg-white rounded border border-solid border-zinc-400 max-md:max-w-full">
             <thead>
+              
               <tr class="font-semibold whitespace-nowrap bg-white bg-opacity-0 text-slate-900">
                 <th class="py-px text-xs leading-4 text-center text-black border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Numéro</th>
                 <th class="text-center border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Client</th>
@@ -155,29 +142,19 @@
                 <th class="text-center border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Date</th>
                 <th class="border-t border-l border-solid bg-black bg-opacity-10 border-zinc-400">Statut</th>
               </tr>
+              
             </thead>
             <tbody>
+              {% for devis in devisList %}
               <tr class="bg-white bg-opacity-0">
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">F001</td>
-                <td class="border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">John Doe</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">500€</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">01/06/2024</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">Payée</td>
+                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">{{ devis.id }}</td>
+                <td class="border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">{{ devis.nomClient }}</td>
+                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">{{ devis.totalPrix }}€</td>
+                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">{{ devis.date|date('d/m/Y') }}</td>
+                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">{{ devis.statut }}</td>
               </tr>
-              <tr class="bg-white bg-opacity-0">
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">F002</td>
-                <td class="border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">John Doe</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">500€</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">01/06/2024</td>
-                <td class="border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">En attente</td>
-              </tr>
-              <tr class="bg-white bg-opacity-0">
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">F003</td>
-                <td class="border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">John Doe</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">500€</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">01/06/2024</td>
-                <td class="whitespace-nowrap border-t border-l border-solid bg-white bg-opacity-0 border-zinc-400 px-3 py-2.5">Payée</td>
-              </tr>
+              {% endfor %}
+              
             </tbody>
           </table>
         </section>
