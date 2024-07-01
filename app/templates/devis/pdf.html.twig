@@ -1,4 +1,3 @@
-{# templates/devis/pdf.html.twig #}
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,23 +41,30 @@
     <table>
         <tr>
             <th>Garage</th>
-            <td>{{ devis.user.firstname }}{{ devis.user.lastname }}</td>
+            <td>{{ devis.user.firstname }} {{ devis.user.lastname }}</td>
         </tr>
         <tr>
             <th>Status</th>
             <td>{{ devis.statut }}</td>
         </tr>
         <tr>
-            <th>Produit</th>
-            <td>{{ devis.produit.nom }}</td>
+            <th>Produits</th>
+            <td>
+                <ul>
+                    {% for produit in devis.produits %}
+                        <li>{{ produit.nom }} - {{ produit.prix }} €</li>
+                    {% endfor %}
+                </ul>
+            </td>
         </tr>
         <tr>
-            <th>Prix</th>
-            <td>{{ devis.produitPrix }}</td>
+            <th>Total Prix</th>
+            <td>{{ devis.totalPrix }} €</td>
         </tr>
         <tr>
             <th>Created at</th>
             <td>{{ devis.date ? devis.date|date('Y-m-d H:i:s') : '' }}</td>
         </tr>
     </table>
+</body>
 </html>
